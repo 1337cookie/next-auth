@@ -11,8 +11,10 @@ import type {
 export * from "./oauth"
 export * from "./email"
 export * from "./credentials"
+export * from "./openid"
 
-export type ProviderType = "oauth" | "email" | "credentials"
+
+export type ProviderType = "oauth" | "email" | "credentials" | "openid"
 
 export interface CommonProviderOptions {
   id: string

@@ -459,6 +459,7 @@ importers:
       '@types/node': ^17.0.42
       '@types/nodemailer': ^6.4.4
       '@types/oauth': ^0.9.1
+      '@types/openid': ^2.0.2
       '@types/react': ^18.0.15
       '@types/react-dom': ^18.0.6
       autoprefixer: ^10.4.7
@@ -474,6 +475,7 @@ importers:
       msw: ^0.42.3
       next: 13.0.6
       oauth: ^0.9.15
+      openid: ^2.0.10
       openid-client: ^5.1.0
       postcss: ^8.4.14
       postcss-cli: ^9.1.0
@@ -490,6 +492,7 @@ importers:
       cookie: 0.5.0
       jose: 4.11.0
       oauth: 0.9.15
+      openid: 2.0.10
       openid-client: 5.1.6
       preact: 10.8.2
       preact-render-to-string: 5.2.0_preact@10.8.2
@@ -515,6 +518,7 @@ importers:
       '@types/node': 17.0.45
       '@types/nodemailer': 6.4.4
       '@types/oauth': 0.9.1
+      '@types/openid': 2.0.2
       '@types/react': 18.0.15
       '@types/react-dom': 18.0.6
       autoprefixer: 10.4.7_postcss@8.4.14
@@ -8648,6 +8652,10 @@ packages:
       '@types/node': 17.0.45
     dev: true
 
+  /@types/openid/2.0.2:
+    resolution: {integrity: sha512-PFLFF6h3n6nsjOC+BBKVDkqGeM+CvYYFHA95Klmg0DOVzuiHEBZFOKoEEubkRMkv/aS684/ww+Gw/2tcBo2n8A==}
+    dev: true
+
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
     dev: true
@@ -9930,6 +9938,14 @@ packages:
     resolution: {integrity: sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==}
     dev: true
 
+  /axios/0.21.4:
+    resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
+    dependencies:
+      follow-redirects: 1.15.1
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /axios/0.21.4_debug@4.3.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
@@ -10659,7 +10675,6 @@ packages:
     dependencies:
       function-bind: 1.1.1
       get-intrinsic: 1.1.2
-    dev: true
 
   /call-me-maybe/1.0.1:
     resolution: {integrity: sha512-wCyFsDQkKPwwF8BDwOiWNx/9K45L/hvggQiDbve+viMNMQnWhrlYIuBk09offfwCRtCO9P6XwUttufzU11WCVw==}
@@ -14275,7 +14290,6 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
-    dev: true
 
   /follow-redirects/1.15.1_debug@4.3.4:
     resolution: {integrity: sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==}
@@ -14469,7 +14483,6 @@ packages:
 
   /function-bind/1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
-    dev: true
 
   /function.prototype.name/1.1.5:
     resolution: {integrity: sha512-uN7m/BzVKQnCUF/iW8jYea67v++2u7m5UgENbHRtdDVclOUP+FMPlCNdmk0h/ysGyo2tavMJEDqJAkJdRa1vMA==}
@@ -14584,7 +14597,6 @@ packages:
       function-bind: 1.1.1
       has: 1.0.3
       has-symbols: 1.0.3
-    dev: true
 
   /get-own-enumerable-property-symbols/3.0.2:
     resolution: {integrity: sha512-I0UBV/XOz1XkIJHEUDMZAbzCThU/H8DxmSfmdGcKPnVhu2VfFqr34jr9777IyaTYvxjedWhqVIilEDsCdP5G6g==}
@@ -15031,7 +15043,6 @@ packages:
   /has-symbols/1.0.3:
     resolution: {integrity: sha512-l3LCuF6MgDNwTDKkdYGEihYjt5pRPbEg46rtlmnSPlUbgmB8LOIrKJbYYFBSbnPaJexMKtiPO8hmeRjRz2Td+A==}
     engines: {node: '>= 0.4'}
-    dev: true
 
   /has-tostringtag/1.0.0:
     resolution: {integrity: sha512-kFjcSNhnlGV1kyoGk7OXKSawH5JOb/LzUc5w9B02hOTO0dfFRjbHQKvg1d6cf3HbeUmtU9VbbV3qzZ2Teh97WQ==}
@@ -15054,7 +15065,6 @@ packages:
     engines: {node: '>= 0.4.0'}
     dependencies:
       function-bind: 1.1.1
-    dev: true
 
   /hast-to-hyperscript/9.0.1:
     resolution: {integrity: sha512-zQgLKqF+O2F72S1aa4y2ivxzSlko3MAvxkwG8ehGmNiqd98BIN3JM1rAJPmplEyLmGLO2QZYJtIneOSZ2YbJuA==}
@@ -19459,7 +19469,6 @@ packages:
 
   /object-inspect/1.12.2:
     resolution: {integrity: sha512-z+cPxW0QGUp0mcqcsgQyLVRDoXFQbXOwBaqyF7VIgI4TWNQsDHrBpUQslRmIfAoYWdYzs6UlKJtB2XJpTaNSpQ==}
-    dev: true
 
   /object-is/1.1.5:
     resolution: {integrity: sha512-3cyDsyHgtmi7I7DfSSI2LDp6SK2lwvtbg0p0R1e0RvTqF5ceGx+K2dfSjm1bKDMVCFEDAQvy+o8c6a7VujOddw==}
@@ -19587,6 +19596,16 @@ packages:
       lru-cache: 6.0.0
       object-hash: 2.2.0
       oidc-token-hash: 5.0.1
+    dev: false
+
+  /openid/2.0.10:
+    resolution: {integrity: sha512-EFTQ61/OUVhCeq78Y3rBpdKSuvgb0lwkU8nN4QTdcv0afc5MT7e4IVuZwgkMsgE993dmhbIhkxHFP3iTVJXWmw==}
+    engines: {node: '>= 0.6.0'}
+    dependencies:
+      axios: 0.21.4
+      qs: 6.10.5
+    transitivePeerDependencies:
+      - debug
     dev: false
 
   /optionator/0.8.3:
@@ -21069,7 +21088,6 @@ packages:
     deprecated: when using stringify with arrayFormat comma, `[]` is appended on single-item arrays. Upgrade to v6.11.0 or downgrade to v6.10.4 to fix.
     dependencies:
       side-channel: 1.0.4
-    dev: true
 
   /qs/6.5.3:
     resolution: {integrity: sha512-qxXIEh4pCGfHICj1mAJQ2/2XVZkjCDTcEgfoSQxc/fYivUZxTkk7L3bDBJSoNrEzXI17oUO5Dp07ktqE5KzczA==}
@@ -22216,7 +22234,6 @@ packages:
       call-bind: 1.0.2
       get-intrinsic: 1.1.2
       object-inspect: 1.12.2
-    dev: true
 
   /sigmund/1.0.1:
     resolution: {integrity: sha512-fCvEXfh6NWpm+YSuY2bpXb/VIihqWA6hLsgboC+0nl71Q7N7o2eaCW8mJa/NLvQhs6jpd3VZV4UiUQlV6+lc8g==}

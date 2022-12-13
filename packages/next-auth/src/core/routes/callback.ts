@@ -1,4 +1,5 @@
 import oAuthCallback from "../lib/oauth/callback"
+import openidCallback from "../lib/openid/callback"
 import callbackHandler from "../lib/callback-handler"
 import { hashToken } from "../lib/utils"
 import getAdapterUserFromEmail from "../lib/email/getUserFromEmail"
@@ -412,6 +413,132 @@ export default async function callback(params: {
     await events.signIn?.({ user, account })
 
     return { redirect: callbackUrl, cookies }
+  } else if (provider.type === "openid") {
+    try {
+      // @ts-ignore
+      if (!provider.mapIdentifierToProfile) {
+        logger.error('CALLBACK_OPENID_HANDLER_ERROR', new Error('Must define an mapIdentifierToProfile() handler to use openid authentication provider'))
+        return { redirect: `${url}/error?error=Configuration` }
+      }
+
+      let account
+      let profile
+
+      try {
+        ({ account, profile } = await openidCallback(query, url.origin, provider))
+      } catch (error) {
+        logger.error('CALLBACK_OPENID_ERROR', error)
+        return { redirect: `${url}/error?error=openIdCallback` }
+      }
+
+      try {
+        // Check if user is allowed to sign in
+        let userOrProfile = profile
+        if (adapter) {
+          const { getUserByAccount } = adapter
+          const userByAccount = await getUserByAccount({
+            providerAccountId: account.providerAccountId,
+            provider: provider.id,
+          })
+
+          if (userByAccount) userOrProfile = userByAccount
+        }
+        // demo 
+        // if (adapter) {
+        //   const { getUserByProviderAccountId } = await adapter.getAdapter(options)
+        //   const userFromProviderAccountId = await getUserByProviderAccountId(provider.id, account.id)
+        //   if (userFromProviderAccountId) {
+        //     userOrProfile = userFromProviderAccountId
+        //   }
+        // }
+
+        try {
+          const signInCallbackResponse = await callbacks.signIn({
+            user: userOrProfile,
+            account,
+            email: profile.email,
+          })
+
+          if (signInCallbackResponse === false) {
+            return { redirect: `${url}/error?error=AccessDenied` }
+          }
+        } catch (error) {
+          if (error instanceof Error) {
+            return { redirect: `${url}/error?error=${encodeURIComponent((error as Error).message)}` }
+          } else {
+            return { redirect: `${url}/error?error=${encodeURIComponent("Unknown error.")}` }
+          }
+        }
+
+        // Sign user in
+        let sessionToken = sessionStore.value;
+        const { user, session, isNewUser } = await callbackHandler({ sessionToken, profile, account, options })
+
+        if (useJwtSession) {
+          const defaultToken = {
+            name: user.name,
+            email: user.email,
+            picture: user.image,
+            sub: user.id?.toString(),
+          }
+          const token = await callbacks.jwt({
+            token: defaultToken,
+            user,
+            account,
+            profile,
+            isNewUser,
+          })
+
+          // Encode token
+          const newToken = await jwt.encode({ ...jwt, token })
+
+          // Set cookie expiry date
+          const cookieExpires = new Date()
+          cookieExpires.setTime(cookieExpires.getTime() + sessionMaxAge * 1000)
+
+          const sessionCookies = sessionStore.chunk(newToken, {
+            expires: cookieExpires,
+          })
+          cookies.push(...sessionCookies)
+        } else {
+          // Save Session Token in cookie
+          cookies.push({
+            name: options.cookies.sessionToken.name,
+            value: (session as AdapterSession).sessionToken,
+            options: {
+              ...options.cookies.sessionToken.options,
+              expires: (session as AdapterSession).expires,
+            },
+          })
+        }
+
+        await events.signIn?.({ user, account, profile, isNewUser })
+
+        // Handle first logins on new accounts
+        // e.g. option to send users to a new account landing page on initial login
+        // Note that the callback URL is preserved, so the journey can still be resumed
+        if (isNewUser && pages.newUser) {
+          return { redirect: pages.newUser }
+        }
+
+        // Callback URL is already verified at this point, so safe to use if specified
+        return { redirect: callbackUrl, cookies };
+
+      } catch (error) {
+        if (error.name === 'AccountNotLinkedError') {
+          // If the email on the account is already linked, but nto with this oAuth account
+          return { redirect: `${url}/error?error=OpenIdAccountNotLinked` }
+        } else if (error.name === 'CreateUserError') {
+          return { redirect: `${url}/error?error=OpenIdCreateAccount` }
+        } else {
+          logger.error('OPENID_CALLBACK_HANDLER_ERROR', error)
+          return { redirect: `${url}/error?error=Callback` }
+        }
+      }
+    } catch (error) {
+      logger.error('OPENID_CALLBACK_ERROR', error)
+      return { redirect: `${url}/error?error=Callback` }
+    }
   }
   return {
     status: 500,

@@ -38,7 +38,7 @@ export default function SigninPage(props: SignInServerPageParams) {
   } = props
   // We only want to render providers
   const providersToRender = providers.filter((provider) => {
-    if (provider.type === "oauth" || provider.type === "email") {
+    if (provider.type === "oauth" || provider.type === "email" || provider.type === "openid") {
       // Always render oauth and email type providers
       return true
     } else if (provider.type === "credentials" && provider.credentials) {
@@ -97,6 +97,38 @@ export default function SigninPage(props: SignInServerPageParams) {
         {providersToRender.map((provider, i: number) => (
           <div key={provider.id} className="provider">
             {provider.type === "oauth" && (
+              <form action={provider.signinUrl} method="POST">
+                <input type="hidden" name="csrfToken" value={csrfToken} />
+                {callbackUrl && (
+                  <input type="hidden" name="callbackUrl" value={callbackUrl} />
+                )}
+                <button
+                  type="submit"
+                  className="button"
+                  style={
+                    // eslint-disable-next-line
+                    {
+                      "--provider-bg": provider.style?.bg ?? "",
+                      "--provider-dark-bg": provider.style?.bgDark ?? "",
+                      "--provider-color": provider.style?.text ?? "",
+                      "--provider-dark-color": provider.style?.textDark ?? "",
+                    } as React.CSSProperties
+                  }
+                >
+                  {provider.style?.logo && (
+                    <img id="provider-logo" src={provider.style.logo} />
+                  )}
+                  {provider.style?.logoDark && (
+                    <img
+                      id="provider-logo-dark"
+                      src={provider.style.logoDark}
+                    />
+                  )}
+                  <span>Sign in with {provider.name}</span>
+                </button>
+              </form>
+            )}
+                        {provider.type === "openid" && (
               <form action={provider.signinUrl} method="POST">
                 <input type="hidden" name="csrfToken" value={csrfToken} />
                 {callbackUrl && (

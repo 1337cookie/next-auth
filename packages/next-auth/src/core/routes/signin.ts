@@ -1,13 +1,14 @@
 import getAuthorizationUrl from "../lib/oauth/authorization-url"
 import emailSignin from "../lib/email/signin"
 import getAdapterUserFromEmail from "../lib/email/getUserFromEmail"
+import openIdSignin from '../lib/openid/signin'
 import type { RequestInternal, ResponseInternal } from ".."
 import type { InternalOptions } from "../types"
 import type { Account } from "../.."
 
 /** Handle requests to /api/auth/signin */
 export default async function signin(params: {
-  options: InternalOptions<"oauth" | "email">
+  options: InternalOptions<"oauth" | "email" | "openid">
   query: RequestInternal["query"]
   body: RequestInternal["body"]
 }): Promise<ResponseInternal> {
@@ -95,6 +96,15 @@ export default async function signin(params: {
       logger.error("SIGNIN_EMAIL_ERROR", { error, providerId: provider.id })
       return { redirect: `${url}/error?error=EmailSignin` }
     }
+  } else if (provider.type === 'openid') {
+    try {
+      const openIdSigninUrl = await openIdSignin(provider)
+      return { redirect: openIdSigninUrl }
+    } catch (error) {
+      logger.error('SIGNIN_OPENID_ERROR', error)
+      return { redirect: `${url}/error?error=openIdSignin` }
+    }
+
   }
   return { redirect: `${url}/signin` }
 }

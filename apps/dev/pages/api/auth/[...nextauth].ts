@@ -34,6 +34,7 @@ import Twitter, { TwitterLegacy } from "next-auth/providers/twitter"
 import Vk from "next-auth/providers/vk"
 import Wikimedia from "next-auth/providers/wikimedia"
 import WorkOS from "next-auth/providers/workos"
+import Steam from "next-auth/providers/steam"
 
 // // Prisma
 // import { PrismaClient } from "@prisma/client"
@@ -106,6 +107,7 @@ export const authOptions: NextAuthOptions = {
     Patreon({ clientId: process.env.PATREON_ID, clientSecret: process.env.PATREON_SECRET }),
     Slack({ clientId: process.env.SLACK_ID, clientSecret: process.env.SLACK_SECRET }),
     Spotify({ clientId: process.env.SPOTIFY_ID, clientSecret: process.env.SPOTIFY_SECRET }),
+    Steam({ apiKey: process.env.STEAM_WEB_API_KEY }),
     Trakt({ clientId: process.env.TRAKT_ID, clientSecret: process.env.TRAKT_SECRET }),
     Twitch({ clientId: process.env.TWITCH_ID, clientSecret: process.env.TWITCH_SECRET }),
     Twitter({ version: "2.0", clientId: process.env.TWITTER_ID, clientSecret: process.env.TWITTER_SECRET }),

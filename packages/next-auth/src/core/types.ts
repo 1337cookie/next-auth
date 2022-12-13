@@ -6,6 +6,7 @@ import type {
   EmailConfig,
   CredentialsConfig,
   OAuthConfigInternal,
+  OpenIDConfig,
 } from "../providers"
 import type { TokenSetParameters } from "openid-client"
 import type { JWT, JWTOptions } from "../jwt"
@@ -500,6 +501,8 @@ export interface User extends DefaultUser {}
 /** @internal */
 export type InternalProvider<T = ProviderType> = (T extends "oauth"
   ? OAuthConfigInternal<any>
+  : T extends "openid"
+  ? OpenIDConfig
   : T extends "email"
   ? EmailConfig
   : T extends "credentials"
