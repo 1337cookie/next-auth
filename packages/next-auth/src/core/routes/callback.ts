@@ -443,14 +443,6 @@ export default async function callback(params: {
 
           if (userByAccount) userOrProfile = userByAccount
         }
-        // demo 
-        // if (adapter) {
-        //   const { getUserByProviderAccountId } = await adapter.getAdapter(options)
-        //   const userFromProviderAccountId = await getUserByProviderAccountId(provider.id, account.id)
-        //   if (userFromProviderAccountId) {
-        //     userOrProfile = userFromProviderAccountId
-        //   }
-        // }
 
         try {
           const signInCallbackResponse = await callbacks.signIn({
