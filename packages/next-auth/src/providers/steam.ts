@@ -26,7 +26,7 @@ export default (options) => {
         avatarfull: image
       }] = json.response.players
 
-      return { id, name, image }
+      return { id, email: id, name, image }
     },
     style: {
         logo: "https://raw.githubusercontent.com/nextauthjs/next-auth/main/packages/next-auth/provider-logos/steam.svg",
