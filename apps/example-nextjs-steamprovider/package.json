@@ -1,0 +1,35 @@
+{
+  "name": "example-nextjs-steamprovider",
+  "description": "Example steam openid 2.0 authentication using NextAuth.js and Next.js",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.20.13",
+    "@next/font": "13.1.6",
+    "@panva/hkdf": "^1.0.2",
+    "@types/node": "18.11.18",
+    "@types/react": "18.0.27",
+    "@types/react-dom": "18.0.10",
+    "cookie": "^0.5.0",
+    "eslint": "8.33.0",
+    "eslint-config-next": "13.1.6",
+    "jose": "^4.11.2",
+    "next": "13.1.6",
+    "next-auth": "git://github.com/1337cookie/next-auth.git#354d9db7c1c2af649da612a4b8910cdc192b7f7f",
+    "next-transpile-modules": "^10.0.0",
+    "oauth": "^0.10.0",
+    "openid": "^2.0.10",
+    "openid-client": "^5.3.4",
+    "preact-render-to-string": "^5.2.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "4.9.5",
+    "uuid": "^9.0.0"
+  }
+}
