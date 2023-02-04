@@ -6,6 +6,7 @@ export const authOptions = {
     secret: 'asdfkadsjfadsjkfasdkfsdfjasfds',
     providers: [
         SteamProvider({
+            // key is revoked
             apiKey: '43F7B9E9D2D198C89066E9A58C46BB93',
         }),
     ],
